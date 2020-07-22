@@ -20,3 +20,4 @@ Route::get('/home', function () {
     return view('home');
 })->name("home");
 
+Route::resource('dashboard/product','Dashboard\ProductController');
