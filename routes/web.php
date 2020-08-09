@@ -16,8 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', function () {
-    return view('home');
-})->name("home");
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('dashboard/product','Dashboard\ProductController');
+
+Route::group(['middleware' => ['isuser']], function () {
+  Route::get('/admin', function () {
+      return redirect(route('product.index'));
+  })->name("home");
+
+  Route::resource('dashboard/product','Dashboard\ProductController');
+
+
+});
+
+
+Auth::routes();

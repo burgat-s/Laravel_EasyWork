@@ -17,7 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+      $products = Product::orderBy('id','desc')->where('deleted', '=', '0')->paginate(3);
+      return view('dashboard.product.index',['products' => $products]);
     }
 
     /**
@@ -27,7 +28,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return  view("dashboard.product.create");
+      return  view("dashboard.product.create",['product' => new Product()]);
     }
 
     /**
@@ -38,14 +39,17 @@ class ProductController extends Controller
      */
     public function store(StoreProductPost $request)
     {
+      // dd($request->validated());
+
+      $ruta = $request->file("image")->store("public/product");
+      $nombreArchivo = basename($ruta);
 
       // "StoreProductPost" es el modelo que se crea para validaciones y llamadas por
       // se crea "php artisan make:request MetodoModeloAuxiliar"    Auxiliar = Post o Get
 
-      // faltan las validaciones de archivos en el request
-      // faltan las validaciones de archivos en el request
-
-      Product::create($request->validated());
+      $Product = Product::create($request->validated());
+      $Product->fill(['image' => $nombreArchivo]);
+      $Product->save();
 
       return back()->with('status','Producto cargado ! ');
 
@@ -59,7 +63,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+      if (is_object($product)) {
+        return  view("dashboard.product.show",['product'=> $product]);
+      }
+
     }
 
     /**
@@ -70,7 +77,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+      if (is_object($product)) {
+        return  view("dashboard.product.edit",['product'=> $product]);
+      }
     }
 
     /**
@@ -80,9 +89,22 @@ class ProductController extends Controller
      * @param  \App\dashboard\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(StoreProductPost $request, Product $product)
     {
-        //
+      $product->update($request->validated());
+
+      if ( null != $request->file("image")) {
+        $ruta = $request->file("image")->store("public/product");
+        $nombreArchivo = basename($ruta);
+        $product->fill(['image' => $nombreArchivo]);
+        $product->save();
+      }
+      if (!$request->featured) {
+        $product->fill(['featured' => "0"]);
+        $product->save();
+      }
+
+       return redirect(route('product.index'));
     }
 
     /**
@@ -93,6 +115,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+      $product->deleted = "1" ;
+      $product->save();
+      return back()->with('status','Elemento Eliminado ! ');
     }
 }

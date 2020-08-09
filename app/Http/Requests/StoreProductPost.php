@@ -21,7 +21,9 @@ class StoreProductPost extends FormRequest
         return [
           'name.required' => 'El nombre es requerido.',
           'description.required' => 'La descripción es requerida.',
-          'file.required' => 'La imagen es requerida.',
+          'image.image' => 'La imagen debe tener un formato jpeg, png, jpg, gif o svg.',
+          'image.mimes' => 'La imagen debe tener un formato jpeg, png, jpg, gif o svg.',
+          'image.max' => 'La imagen debe tener un tamaño maximo de 2Mb.',
           'price.required' => 'El precio es requerido.',
           'stock.required' => 'El Stock es requerido.',
           'discount.required' => 'El descuento es requerido.',
@@ -45,8 +47,8 @@ class StoreProductPost extends FormRequest
           "price" => "required|numeric|min:0",
           "stock" => "required|numeric|min:0",
           "discount" => "required|numeric|min:0",
-          "featured" =>  "string",
-          "file" => "required",
+          "featured" =>  "boolean",
+          "image" => "file|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048",
         ];
     }
 }

@@ -5,8 +5,19 @@
  */
 
 require('./bootstrap');
+const ClassicEditor = require( '@ckeditor/ckeditor5-build-classic' );
+
+ClassicEditor
+    .create( document.querySelector( '#descriptionContent' ) )
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
 
 window.Vue = require('vue');
+
 
 /**
  * The following block of code may be used to automatically register your

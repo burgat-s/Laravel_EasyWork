@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->integer('stock')->nullable();
             $table->string('image')->nullable();
             $table->integer('discount')->nullable();
-            $table->string('featured');
+            $table->integer('featured')->default('0');
             $table->enum('deleted',['0','1'])->default('0');
         });
     }
