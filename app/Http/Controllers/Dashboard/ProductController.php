@@ -39,17 +39,17 @@ class ProductController extends Controller
      */
     public function store(StoreProductPost $request)
     {
-      // dd($request->validated());
+        $requestData= $request->validated();
 
-      $ruta = $request->file("image")->store("public/product");
-      $nombreArchivo = basename($ruta);
+        if ( null != $request->file("image")) {
+            $ruta = $request->file("image")->store("public/product");
+            $nombreArchivo = basename($ruta);
+            $requestData['image'] = $nombreArchivo;
+        }else{
+            $requestData['image'] = null;
+        }
 
-      // "StoreProductPost" es el modelo que se crea para validaciones y llamadas por
-      // se crea "php artisan make:request MetodoModeloAuxiliar"    Auxiliar = Post o Get
-
-      $Product = Product::create($request->validated());
-      $Product->fill(['image' => $nombreArchivo]);
-      $Product->save();
+      Product::create($requestData);
 
       return back()->with('status','Producto cargado ! ');
 
@@ -91,18 +91,19 @@ class ProductController extends Controller
      */
     public function update(StoreProductPost $request, Product $product)
     {
-      $product->update($request->validated());
+        $requestData= $request->validated();
 
       if ( null != $request->file("image")) {
         $ruta = $request->file("image")->store("public/product");
         $nombreArchivo = basename($ruta);
-        $product->fill(['image' => $nombreArchivo]);
-        $product->save();
+        $requestData['image'] = $nombreArchivo;
+      }else{
+          $requestData['image'] = null;
       }
       if (!$request->featured) {
-        $product->fill(['featured' => "0"]);
-        $product->save();
+        $requestData['featured'] =  0 ;
       }
+        $product->update($requestData);
 
        return redirect(route('product.index'));
     }
