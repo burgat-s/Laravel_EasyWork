@@ -4,8 +4,8 @@
     <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del producto" value="{{old('name',$product->name)}}">
   </div>
   <div class="form-group">
-    <label for="description">Descripcion</label>
-    <textarea class="form-control" id="descriptionContent" name="description" rows="3" placeholder="Descripcion del producto">{{old('description',$product->description)}}</textarea>
+    <label for="description">Descripción</label>
+    <textarea class="form-control" id="descriptionContent" name="description" rows="3" placeholder="Descripción del producto">{{old('description',$product->description)}}</textarea>
   </div>
   <div class="form-group">
     @if ($product->image)
@@ -16,7 +16,7 @@
   </div>
   <div class="form-group">
     <label for="price">Precio</label>
-    <input  type="number" min="0" step="any"class="form-control" id="price" name="price" placeholder="$137.59" value="{{old('price',$product->price)}}">
+    <input  type="number" min="0" step="any" class="form-control" id="price" name="price" placeholder="$137.59" value="{{old('price',$product->price)}}">
   </div>
   <div class="form-group">
     <label for="stock">Stock</label>
@@ -27,7 +27,21 @@
     <input  type="number" min="0" class="form-control" id="discount" name="discount" placeholder="Ej: si quiere aplicar ''%20'' , solo ingrese ''20'' " value="{{old('discount',$product->discount)}}">
   </div>
   <div class="form-check">
-    <input type="checkbox" name="featured" class="form-check-input" id="featured" value="1" @if (old('featured')== 1 || $product->featured == '1' ) checked @endif>
+    <input type="checkbox" name="featured" class="form-check-input" id="featured" value="1" @if ( old('featured')== 1 || $product->featured == '1' ) checked @endif>
     <label class="form-check-label" for="featured">Promocionado</label>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
+    @if(1==1)
+        <h1> HOLAAAA</h1>
+    @else
+        <h2>chau</h2>
+    @endif
+
+    <table>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+
+

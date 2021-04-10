@@ -31,3 +31,4 @@ Route::group(['middleware' => ['isuser']], function () {
 
 
 Auth::routes();
+

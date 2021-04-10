@@ -11,12 +11,12 @@ class StoreProductPost extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
           'name.required' => 'El nombre es requerido.',
@@ -39,7 +39,7 @@ class StoreProductPost extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
           "name" =>  "required|string|min:3",
